@@ -25,14 +25,14 @@ class Campus
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="campus")
-     */
-    private $participants;
-
-    /**
      * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="siteOrganisateur")
      */
     private $sorties;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="relation")
+     */
+    private $participants;
 
     public function __construct()
     {

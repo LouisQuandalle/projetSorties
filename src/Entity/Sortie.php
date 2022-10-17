@@ -51,17 +51,6 @@ class Sortie
 
 
     /**
-     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="inscrit")
-     */
-    private $participants;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="sorties")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $organisateur;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -79,9 +68,21 @@ class Sortie
      */
     private $etat;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="inscrit")
+     */
+    private $inscrit;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisateur;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->inscrit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -233,6 +234,33 @@ class Sortie
     public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participant>
+     */
+    public function getInscrit(): Collection
+    {
+        return $this->inscrit;
+    }
+
+    public function addInscrit(Participant $inscrit): self
+    {
+        if (!$this->inscrit->contains($inscrit)) {
+            $this->inscrit[] = $inscrit;
+            $inscrit->addInscrit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscrit(Participant $inscrit): self
+    {
+        if ($this->inscrit->removeElement($inscrit)) {
+            $inscrit->removeInscrit($this);
+        }
 
         return $this;
     }
