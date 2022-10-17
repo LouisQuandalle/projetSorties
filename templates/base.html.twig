@@ -2,18 +2,20 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        <title>{% block title %}Sortir !{% endblock %}</title>
+        <link rel="icon" href="{{ asset('img/favicon.png') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
     </head>
     <body>
+    <div class="container">
+    <header>
+        <h1><a href="{{ path('main_home') }}"><img src="{{ asset('img/logo.png') }}" alt="Sorties !"></a></h1>
+        {% include('inc/nav.html.twig') %}
+        <h1>Sortir.com</h1>
+
+    </header>
         {% block body %}{% endblock %}
+    </div>
     </body>
 </html>
