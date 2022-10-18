@@ -30,9 +30,11 @@ class Campus
     private $sorties;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="relation")
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="campus")
      */
     private $participants;
+
+
 
     public function __construct()
     {

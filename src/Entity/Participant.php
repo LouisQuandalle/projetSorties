@@ -72,11 +72,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $image;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=campus::class, inversedBy="participants")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $campus;
+
 
     /**
      * @ORM\ManyToMany(targetEntity=Sortie::class, inversedBy="inscrit")
@@ -87,6 +83,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateur")
      */
     private $sorties;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="participants")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $campus;
 
     public function __construct()
     {
