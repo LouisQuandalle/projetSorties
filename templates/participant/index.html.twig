@@ -17,7 +17,6 @@
                 <th>Telephone</th>
                 <th>Administrateur</th>
                 <th>Actif</th>
-                <th>Role</th>
                 <th>Image</th>
                 <th>actions</th>
             </tr>
@@ -34,7 +33,6 @@
                 <td>{{ participant.telephone }}</td>
                 <td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
                 <td>{{ participant.actif ? 'Yes' : 'No' }}</td>
-                <td>{{ participant.role }}</td>
                 <td>{{ participant.image }}</td>
                 <td>
                     <a href="{{ path('app_participant_show', {'id': participant.id}) }}">show</a>

@@ -99,6 +99,11 @@ article {
     display:flex;
 }
 
+table,
+td, tr {
+    border: 1px solid #333;
+}
+
 @media screen and (min-width: 700px) {
     .serie-details {
         grid-template-columns: 300px 1fr;
