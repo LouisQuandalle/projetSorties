@@ -7,6 +7,7 @@ use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use App\Security\AppCustomAuthentificator;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,9 +95,11 @@ class ParticipantController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_participant_edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER",message="vous n'êtes pas autorisés à consulter cette page")
      */
     public function edit(Request $request, Participant $participant, ParticipantRepository $participantRepository,SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppCustomAuthentificator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        if($this->getUser() == $participant){}
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 
@@ -110,6 +113,9 @@ class ParticipantController extends AbstractController
 
             $file = $form->get('image')->getData();
             if ($file) {
+                $path= $this->getParameter('upload_champ_entite_dir').'/'.$participant->getImage();
+                unlink($path);
+
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
@@ -131,11 +137,6 @@ class ParticipantController extends AbstractController
                 $participant->setImage($newFilename);
             }
             $participantRepository->add($participant, true);
-            $userAuthenticator->authenticateUser(
-                $participant,
-                $authenticator,
-                $request
-            );
 
             return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         }
