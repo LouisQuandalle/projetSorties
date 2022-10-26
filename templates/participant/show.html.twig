@@ -5,23 +5,15 @@
 {% block body %}
     <h1>Participant</h1>
 
+
+    {% if (participant.image) %}
+        <img id="pp" src="{{ asset('img/'~participant.image) }}" alt="pp">
+    {% endif %}
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ participant.id }}</td>
-            </tr>
-            <tr>
                 <th>Mail</th>
                 <td>{{ participant.mail }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ participant.roles ? participant.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ participant.password }}</td>
             </tr>
             <tr>
                 <th>Nom</th>
@@ -43,20 +35,12 @@
                 <th>Actif</th>
                 <td>{{ participant.actif ? 'Yes' : 'No' }}</td>
             </tr>
-            <tr>
-                <th>Role</th>
-                <td>{{ participant.role }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ participant.image }}</td>
-            </tr>
+
         </tbody>
     </table>
 
-    <a href="{{ path('app_participant_index') }}">back to list</a>
+    <a href="{{ path('app_sortie_index') }}">back to list</a>
 
     <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
 
-    {{ include('participant/_delete_form.html.twig') }}
 {% endblock %}

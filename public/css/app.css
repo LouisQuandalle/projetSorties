@@ -30,7 +30,15 @@ body > .container {
     min-height: 100vh;
 }
 
+header{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap:wrap ;
+}
+
+
 header img {
+
     height: 70px;
 }
 
@@ -41,7 +49,7 @@ main {
 nav ul {
     display: flex;
     list-style: none;
-    padding-left: 0;
+    padding-left: 5%;
 }
 
 nav li {
@@ -102,6 +110,11 @@ article {
 table,
 td, tr {
     border: 1px solid #333;
+}
+
+#pp{
+    max-width:70px;
+    max-height: 70px;
 }
 
 @media screen and (min-width: 700px) {

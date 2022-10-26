@@ -4,10 +4,12 @@
 
 {% block body %}
     <h1>Edit Participant</h1>
-
+    {% if (participant.image) %}
+        <img id="pp" src="{{ asset('img/'~participant.image) }}" alt="Profile picture">
+    {% endif %}
     {{ include('participant/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_participant_index') }}">back to list</a>
+    <a href="{{ path('app_sortie_index') }}">back to list</a>
 
-    {{ include('participant/_delete_form.html.twig') }}
+  {#   {{ include('participant/_delete_form.html.twig') }} #}
 {% endblock %}

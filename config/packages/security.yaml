@@ -18,11 +18,18 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\AppCustomAuthentificatorAuthenticator
+            custom_authenticator: App\Security\AppCustomAuthentificator
             logout:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+            remember_me:
+                secret:   '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -30,11 +37,23 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/campus, roles: ROLE_ADMIN }
+        - { path: ^/ville, roles: ROLE_ADMIN }
+        - { path: ^/etat, roles: ROLE_ADMIN }
+        - { path: ^/participant/$, roles: ROLE_ADMIN }
+        - { path: ^/participant/[0-9]+, roles: ROLE_USER }
+        - { path: ^/participant/[0-9]+/edit, roles: ROLE_ADMIN }
+        - { path: ^/participant/delete$, roles: ROLE_ADMIN }
+        - { path: ^/participant/new$, roles: ROLE_ADMIN }
+        - { path: ^/participant/index$, roles: ROLE_ADMIN }
+        - { path: ^/sortie, roles: ROLE_USER }
 
 when@test:
     security:

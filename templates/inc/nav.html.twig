@@ -1,17 +1,18 @@
 <nav>
     <ul>
         {% if app.user %}
-            <li><a href="" title="accueil">Accueil</a></li>
-            <li><a href="" title="">Mon profil</a></li>
+            <li><a href="{{ path('app_sortie_index') }}" title="accueil">Accueil</a></li>
+            <li><a href="{{ path('app_participant_edit',{'id':app.user.id })}}" title="Mon profil">Mon profil</a></li>
             <li><a href="{{ path('app_logout') }}" title="Logout">Se déconnecter</a></li>
 
             {% if is_granted("ROLE_ADMIN") %}
-                <li><a href="" title="">Villes</a></li>
-                <li><a href="" title="">Campus</a></li>
+                <li><a href="{{ path('app_participant_index') }}">Gestion des participants</a></li>
+                <li><a href="{{ path('app_ville_index') }}" title="Villes">Villes</a></li>
+                <li><a href="{{ path('app_campus_index') }}" title="Campus">Campus</a></li>
             {% endif %}
 
         {% else %}
-            <li><a href="{{ path('app_login') }}" title="">Se connecter</a></li>
+            <li><a href="{{ path('app_login') }}" title="login">Se connecter</a></li>
         {% endif %}
     </ul>
 </nav>

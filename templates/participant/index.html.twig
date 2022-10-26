@@ -33,7 +33,9 @@
                 <td>{{ participant.telephone }}</td>
                 <td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
                 <td>{{ participant.actif ? 'Yes' : 'No' }}</td>
-                <td>{{ participant.image }}</td>
+                <td>{% if (participant.image) %}
+                    <img src="{{ asset('img/'~participant.image) }}" alt="pp">
+                {% endif %}</td>
                 <td>
                     <a href="{{ path('app_participant_show', {'id': participant.id}) }}">show</a>
                     <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
