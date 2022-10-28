@@ -63,4 +63,66 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function search(string $campus, string $nom = null, string $dateDebut = null, string $dateFin = null, int $idUser, string $sortieOrga = null, string $sortieInscrit = null, string $sortiePasInscrit = null, string $sortiePasse = null)
+    {
+        $query = $this->createQueryBuilder('s');
+
+        dump($sortiePasInscrit);
+
+        if ($campus != null)
+        {
+            $query->leftJoin('s.siteOrganisateur', 'c');
+            $query->andWhere('c.id = :id')->setParameter('id', $campus);
+        }
+
+        if ($nom != null){
+            $query->andWhere('s.nom like :nom')->setParameter('nom', $nom);
+        }
+
+
+        if ($dateDebut != null)
+        {
+            $query->andWhere('s.dateHeureDebut > :dateHeureDebut')->setParameter('dateHeureDebut',  $dateDebut);
+            $query->orderBy('s.dateHeureDebut', 'ASC');
+        }
+
+        if ($dateFin != null)
+        {
+            $query->andWhere('s.dateLimiteInscription < :dateLimiteInscription')
+                ->setParameter('dateLimiteInscription', $dateFin);
+            $query->orderBy('s.dateHeureDebut', 'ASC');
+        }
+
+        if ($sortieOrga != null)
+        {
+            $query->andWhere('s.organisateur = :id')->setParameter('id', $idUser);
+        }
+
+        if ($sortieInscrit != null)
+        {
+            $query->innerJoin('s.inscrit', 'p');
+            $query->andWhere('p.id = :id') ->setParameter('id', $idUser);
+        }
+
+        if ($sortiePasInscrit != null)
+        {
+            dump('fre');
+            $query->innerJoin('s.inscrit', 'p');
+            $query->andWhere('p.id != :id')->setParameter('id', $idUser);
+        }
+
+        if ($sortiePasse != null)
+        {
+            $query->andWhere('s.etat = 2 ');
+        }
+
+        dump($query->getQuery()->getResult());
+        return $query->getQuery()->getResult();
+    }
+
+
+
+
 }
+

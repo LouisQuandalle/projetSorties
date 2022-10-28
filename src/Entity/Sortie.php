@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -218,6 +219,8 @@ class Sortie
     {
         return $this->lieu;
     }
+
+
 
     public function setLieu(?Lieu $lieu): self
     {
